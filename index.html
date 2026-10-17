@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HorseCheng · Vibe Coding 作品集</title>
+<meta name="description" content="HorseCheng 用 AI 協作（vibe coding）從零做出、部署上線的網站作品集：影視與閱讀追蹤、AI 新聞聚合、股票資產管理、日語學習、寶可夢卡牌抽卡模擬器，以及 ChatGPT Dot 每日自動更新的資訊站。">
+<meta property="og:title" content="HorseCheng · Vibe Coding 作品集">
+<meta property="og:description" content="9 個用對話寫出來、真的在線上跑的網站。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/shots/cineai.webp">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('hc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --bg-2:#efece4; --surface:#ffffff; --ink:#17171a; --ink-2:#4a4a52; --ink-3:#85858f;
+  --line:#e2ded4; --line-2:#d3cec2; --accent:#e4572e; --shadow:0 1px 2px rgba(23,23,26,.05),0 12px 32px -12px rgba(23,23,26,.18);
+  --radius:18px; --max:1180px;
+  --sans:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --display:"Space Grotesk","Noto Sans TC",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f0f12; --bg-2:#16161b; --surface:#1b1b21; --ink:#f1efe9; --ink-2:#b9b7b0; --ink-3:#7d7c85;
+    --line:#2a2a31; --line-2:#383841; --accent:#ff7a4d; --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f0f12; --bg-2:#16161b; --surface:#1b1b21; --ink:#f1efe9; --ink-2:#b9b7b0; --ink-3:#7d7c85;
+  --line:#2a2a31; --line-2:#383841; --accent:#ff7a4d; --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.top.scrolled{border-bottom-color:var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:13px;letter-spacing:.02em}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{text-decoration:none;font-size:14px;color:var(--ink-2);padding:6px 12px;border-radius:999px;transition:background .15s,color .15s}
+.nav a:hover{background:var(--bg-2);color:var(--ink)}
+.theme-btn{width:36px;height:36px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.theme-btn svg{width:17px;height:17px}
+.theme-btn .moon{display:none}
+:root[data-theme="dark"] .theme-btn .sun{display:none}
+:root[data-theme="dark"] .theme-btn .moon{display:block}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .theme-btn .sun{display:none}
+  :root:not([data-theme="light"]) .theme-btn .moon{display:block}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:88px 0 56px;position:relative}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,8.6vw,84px);line-height:1.04;letter-spacing:-.035em;margin:20px 0 24px}
+.hero h1 .ln{display:inline-block}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:clamp(16px,1.6vw,19px);color:var(--ink-2);max-width:60ch;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{flex:1 1 160px;padding:20px 24px 20px 0}
+.stat + .stat{padding-left:24px;border-left:1px solid var(--line)}
+.stat b{display:block;font-family:var(--display);font-size:34px;line-height:1.1;letter-spacing:-.02em}
+.stat span{font-size:13px;color:var(--ink-3)}
+
+/* ---------- jump strip ---------- */
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.jump a{text-decoration:none;font-size:13px;padding:6px 12px 6px 10px;border:1px solid var(--line-2);border-radius:999px;display:inline-flex;align-items:center;gap:8px;color:var(--ink-2);background:var(--surface);transition:border-color .15s,color .15s}
+.jump a:hover{border-color:var(--c);color:var(--ink)}
+.jump i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+
+/* ---------- sections ---------- */
+section.block{padding:72px 0}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.sec-head h2{font-family:var(--display);font-size:clamp(28px,3.6vw,40px);letter-spacing:-.025em;line-height:1.15;margin:10px 0 0}
+.sec-head p{color:var(--ink-2);max-width:46ch;margin:0;font-size:15px}
+
+/* ---------- app rows ---------- */
+.apps{display:flex;flex-direction:column;gap:28px}
+.app{--c:var(--accent);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--radius) + 6px);overflow:hidden;box-shadow:var(--shadow)}
+.shot{position:relative;background:color-mix(in srgb,var(--c) 14%,var(--bg-2));background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--c) 22%,transparent) 1px,transparent 0);background-size:18px 18px;padding:44px 52px 0;overflow:hidden}
+.frame{position:relative;padding-top:28px;border-radius:12px 12px 0 0;overflow:hidden;background:var(--surface);box-shadow:0 24px 60px -20px rgba(0,0,0,.4);border:1px solid color-mix(in srgb,var(--ink) 10%,transparent);border-bottom:0;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.app:hover .frame{transform:translateY(-6px)}
+.frame-bar{position:absolute;top:0;left:0;right:0;height:28px;display:flex;align-items:center;gap:6px;padding:0 12px;background:color-mix(in srgb,var(--ink) 5%,var(--surface));border-bottom:1px solid color-mix(in srgb,var(--ink) 8%,transparent)}
+.frame-bar i{width:9px;height:9px;border-radius:50%;background:color-mix(in srgb,var(--ink) 18%,transparent)}
+.frame-bar span{margin-left:10px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame img{width:100%;height:auto;aspect-ratio:2.12/1;object-fit:cover;object-position:left top;margin-bottom:-6px}
+
+.body{padding:34px 52px 38px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 56px;min-width:0;border-top:1px solid var(--line)}
+.bl{display:flex;flex-direction:column;min-width:0}
+.br{min-width:0;padding-top:6px}
+.br .chips{margin-bottom:0}
+.idx{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.08em}
+.idx b{color:var(--c);font-weight:500}
+.idx .tag{border:1px solid var(--line-2);border-radius:999px;padding:1px 9px;letter-spacing:.02em}
+.body h3{font-family:var(--display);font-size:clamp(26px,2.6vw,32px);line-height:1.15;letter-spacing:-.02em;margin:14px 0 4px;display:flex;align-items:center;gap:12px}
+.body h3 .ico{width:38px;height:38px;border-radius:10px;background:var(--c);color:#fff;display:grid;place-items:center;flex:none}
+.body h3 .ico svg{width:20px;height:20px}
+.body .sub{font-size:14px;color:var(--ink-3);margin:0 0 14px}
+.body p.desc{color:var(--ink-2);margin:0 0 18px;font-size:15.5px}
+.body p.desc strong{color:var(--ink)}
+.feats{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:8px}
+.feats li{position:relative;padding-left:20px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.feats li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--c);transform:rotate(45deg)}
+.feats li strong{color:var(--ink);font-weight:700}
+.nums{display:flex;gap:22px;flex-wrap:wrap;margin:0 0 18px}
+.nums div{font-size:12px;color:var(--ink-3);line-height:1.3}
+.nums b{display:block;font-family:var(--display);font-size:24px;color:var(--ink);letter-spacing:-.02em}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 24px}
+.chips span{font-family:var(--mono);font-size:11.5px;padding:3px 9px;border-radius:6px;background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line)}
+.cta{margin-top:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14.5px;padding:11px 18px;border-radius:999px;background:var(--ink);color:var(--bg);transition:background .15s,transform .15s}
+.btn:hover{background:var(--c);color:#fff;transform:translateY(-1px)}
+.btn svg{width:15px;height:15px}
+.url{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+
+/* ---------- auto sites ---------- */
+.auto-sec{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{--c:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;box-shadow:var(--shadow);transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--c)}
+.card .thumb{aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.card .thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.card .cb{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+.badge{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);padding:3px 10px;border-radius:999px;margin-bottom:12px}
+.badge i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.card h3{font-family:var(--display);font-size:21px;letter-spacing:-.015em;line-height:1.25;margin:0 0 8px}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0 0 14px}
+.card ul{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:5px}
+.card ul li{font-size:13.5px;color:var(--ink-2);padding-left:16px;position:relative}
+.card ul li::before{content:"→";position:absolute;left:0;color:var(--c);font-size:12px}
+.card .go{margin-top:auto;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.card:hover .go{color:var(--c)}
+.card .go svg{width:14px;height:14px;transition:transform .2s}
+.card:hover .go svg{transform:translate(2px,-2px)}
+
+/* ---------- vibe emphasis ---------- */
+.hero h1 .vc{font-style:normal;background:linear-gradient(100deg,#e4572e 0%,#e8a33d 35%,#8b5cf6 70%,#2563eb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
+.fine{font-size:12px;color:var(--ink-3);margin:10px 0 0}
+.vibe{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13.5px;padding:9px 13px;border-radius:10px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 13%,transparent),transparent 85%);border:1px dashed color-mix(in srgb,var(--c) 45%,transparent);margin:0 0 16px;color:var(--ink-2)}
+.vibe b{color:var(--ink)}
+.vibe .spark{color:var(--c);font-size:14px}
+.vibe .vm{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+
+.vibe-sec{padding-top:24px}
+.vibe-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+.chat{background:#141418;color:#e9e7e1;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid #2a2a31}
+.chat-top{height:36px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#1c1c22;border-bottom:1px solid #2a2a31}
+.chat-top i{width:10px;height:10px;border-radius:50%;background:#3a3a43}
+.chat-top i:nth-child(1){background:#ff5f57}.chat-top i:nth-child(2){background:#febc2e}.chat-top i:nth-child(3){background:#28c840}
+.chat-top span{margin-left:10px;font-family:var(--mono);font-size:11.5px;color:#8a8994}
+.chat-body{padding:22px 22px 8px;display:flex;flex-direction:column;gap:16px}
+.msg{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.msg .who{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:700;font-family:var(--mono)}
+.msg.me .who{background:#2b2b33;color:#e9e7e1}
+.msg.ai .who{background:linear-gradient(135deg,#e4572e,#8b5cf6);color:#fff}
+.msg p{margin:5px 0 0;font-size:14.5px;line-height:1.7;color:#d6d4cd}
+.msg.me p{color:#fff}
+.diff{margin-top:10px;display:grid;gap:3px;font-family:var(--mono);font-size:11.5px;background:#0d0d10;border:1px solid #26262d;border-radius:8px;padding:10px 12px}
+.diff .add{color:#5fd38a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.done{font-family:var(--mono);font-size:12px;color:#5fd38a;padding:4px 0 12px 46px}
+.chat-cap{font-size:11.5px;color:#7d7c85;padding:10px 22px 14px;border-top:1px solid #23232a}
+.steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:20px 22px}
+.step + .step{border-top:1px solid var(--line)}
+.step .n{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:3px}
+.step h4{font-family:var(--display);font-size:17px;margin:0 0 4px;letter-spacing:-.01em}
+.step p{font-size:14px;color:var(--ink-2);margin:0}
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:18px 22px;background:var(--bg-2);border-top:1px solid var(--line)}
+.tools .tl{font-size:12px;color:var(--ink-3);margin-right:4px}
+.tools .tool{font-size:12.5px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--surface);border:1px solid var(--line-2)}
+
+footer{padding:56px 0 64px;color:var(--ink-3);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.badge i{animation:none}}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .shot{padding:32px 32px 0}
+  .body{padding:30px 32px 34px;gap:8px 36px}
+  .grid3{grid-template-columns:1fr 1fr}
+  .vibe-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav{display:none}
+  .theme-btn{margin-left:auto}
+  .hero{padding:56px 0 40px}
+  .stat{flex:1 1 45%;padding:16px 12px 16px 0}
+  .stat + .stat{padding-left:12px}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .body{display:flex;flex-direction:column;padding:26px 20px 28px}
+  .bl{display:contents}
+  .br{order:1;padding-top:0}
+  .cta{order:2;margin-top:20px}
+  .shot{padding:18px 18px 0}
+  .frame img{aspect-ratio:16/11}
+  .grid3{grid-template-columns:1fr}
+  .chat-body{padding:18px 16px 6px}
+  .done{padding-left:46px}
+  .step{padding:18px 16px}
+  section.block{padding:56px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#"><span class="brand-mark">HC</span>HorseCheng</a>
+    <nav class="nav">
+      <a href="#vibe">Vibe Coding</a>
+      <a href="#apps">全端應用</a>
+      <a href="#auto">自動化資訊站</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="切換深淺色">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Portfolio · 100% Vibe Coded</span>
+    <h1><span class="ln"><em class="vc">Vibe Coding</em>，</span><br><span class="ln">把想法聊成上線產品。</span></h1>
+    <p class="lead">我寫程式不是從空白的編輯器開始，而是從一段對話開始：先說出想要什麼，看 AI 寫出來，自己用用看，不順手就再回頭調。這裡的 9 個網站全部是這樣做出來的，而且現在都還在線上運作。</p>
+    <div class="stats">
+      <div class="stat"><b>9</b><span>個上線網站</span></div>
+      <div class="stat"><b>640</b><span>次 commit</span></div>
+      <div class="stat"><b>93%</b><span>commit 與 Claude 共同撰寫</span></div>
+      <div class="stat"><b>11</b><span>個月 · 2025.11 → 2026.10</span></div>
+    </div>    <div class="jump">
+      <a href="#libriai" style="--c:#ea7a0c"><i></i>LibriAI</a>
+      <a href="#cineai" style="--c:#e11d48"><i></i>CineAI</a>
+      <a href="#newsfeed" style="--c:#2563eb"><i></i>News Feed</a>
+      <a href="#stock" style="--c:#4f6bff"><i></i>Portfolio</a>
+      <a href="#japanese" style="--c:#0e9fb0"><i></i>日語學習</a>
+      <a href="#ptcg" style="--c:#d49a00"><i></i>卡牌抽獎所</a>
+      <a href="#auto" style="--c:#8b5cf6"><i></i>自動化資訊站 ×3</a>
+    </div>
+  </div>
+</section>
+
+<section class="block vibe-sec" id="vibe">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <span class="eyebrow">00 — What is vibe coding</span>
+        <h2>我的 Vibe Coding 流程</h2>
+      </div>
+      <p>Vibe coding 就是用自然語言跟 AI 一起寫程式。我負責想清楚「要什麼」和「好不好用」，程式碼交給 AI 寫。</p>
+    </div>
+
+    <div class="vibe-grid">
+      <div class="chat rv" aria-label="示意對話">
+        <div class="chat-top"><i></i><i></i><i></i><span>claude-code — libriai</span></div>
+        <div class="chat-body">
+          <div class="msg me"><span class="who">我</span><p>漫畫讀到 100% 的時候，可以直接跳到下一卷嗎？每次都要回書櫃找很麻煩。</p></div>
+          <div class="msg ai"><span class="who">AI</span><div><p>可以。我在閱讀進度旁邊加一個「下一卷」按鈕：如果下一卷是另一本書，就直接開啟它；如果是同一本書用單行本封面集記錄多卷，就原地換封面、頁數歸零、狀態改成閱讀中。</p>
+            <div class="diff"><span class="add">~ components/BookDetailHeader.tsx</span><span class="add">+ changelog.ts  v2.4.1「一鍵切換下一卷」</span></div>
+          </div></div>
+          <div class="msg me"><span class="who">我</span><p>好，部署。</p></div>
+          <div class="done">✓ 已部署到 Cloud Run · LibriAI v2.4.1</div>
+        </div>
+        <div class="chat-cap">示意對話，依 LibriAI v2.4.1 的實際更新改寫</div>
+      </div>
+
+      <div class="steps rv">
+        <div class="step"><span class="n">01</span><div><h4>說出需求</h4><p>用口語描述想要的功能和畫面，先讓 AI 提出架構和資料模型。</p></div></div>
+        <div class="step"><span class="n">02</span><div><h4>邊做邊用</h4><p>做出最小可用版本就先自己用，碰到不順手的地方，就直接把感受告訴 AI。</p></div></div>
+        <div class="step"><span class="n">03</span><div><h4>交給 AI 上線</h4><p>連 Cloud Run、Firebase、Cloud SQL、Supabase 的部署和排程也用對話完成。</p></div></div>
+        <div class="step"><span class="n">04</span><div><h4>記錄每次迭代</h4><p>每個 App 都有 changelog，專案裡的 CLAUDE.md 記住架構和眉角，下次對話直接接著做。</p></div></div>
+        <div class="tools">
+          <span class="tl">我的 AI 工具箱</span>
+          <span class="tool">Claude Code</span><span class="tool">Google AI Studio</span><span class="tool">ChatGPT Dot</span><span class="tool">Gemini API（App 內 AI 功能）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="apps">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <span class="eyebrow">01 — Full-stack apps</span>
+        <h2>全端應用</h2>
+      </div>
+      <p>前端、後端、資料庫、登入、排程到部署都有，全部跑在 Google Cloud、Firebase 或 Supabase 上。</p>
+    </div>
+
+    <div class="apps">
+
+      <!-- LibriAI -->
+      <article class="app rv" id="libriai" style="--c:#ea7a0c">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>libriai.run.app</span></div>
+          <img src="assets/shots/libriai.webp" width="1911" height="898" alt="LibriAI 書櫃畫面：投資理財書與漫畫封面網格，標示閱讀狀態與評分" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>01</b><span class="tag">閱讀追蹤</span></div>
+          <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></span>LibriAI</h3>
+          <p class="sub">智慧圖書管理 · 書籍／漫畫／小說</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Google AI Studio</b> → <b>Claude Code</b></span><span class="vm">53 commits · 我的第一個作品 2025.11</span></div>
+          <p class="desc">我的第一個 vibe coding 作品。先在 Google AI Studio 用對話生出雛形，再交給 Claude Code 一路擴充成完整產品，後來的 CineAI 就是從它 fork 出去的。</p>
+          <div class="cta">
+            <a class="btn" href="https://libriai-1044062718546.us-west1.run.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <ul class="feats">
+            <li><strong>閱讀紀錄</strong>：用進度滑桿或百分比記錄，自動算出今天讀了幾頁</li>
+            <li>系列作讀完會出現<strong>「下一卷」</strong>按鈕，可一鍵切換</li>
+            <li>AI 選書、Markdown 讀書筆記、每天自動生成的閱讀靈感</li>
+            <li>閱讀熱力圖、分類統計、行事曆與成就系統</li>
+          </ul>
+          <div class="chips"><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Supabase</span><span>Gemini</span><span>Google Books</span><span>Cloud Run</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CineAI -->
+      <article class="app rv" id="cineai" style="--c:#e11d48">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>cineai.run.app</span></div>
+          <img src="assets/shots/cineai.webp" width="1905" height="903" alt="CineAI 片單畫面：動漫海報網格，標示觀看狀態、評分與觀看進度" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>02</b><span class="tag">影視追蹤</span></div>
+          <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9M12.4 3.4l3.1 4M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>CineAI</h3>
+          <p class="sub">智慧影視管理 · 電影／影集／動漫</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Claude Code</b></span><span class="vm">107 commits · 85 與 Claude 共同撰寫</span></div>
+          <p class="desc">從 LibriAI fork 出來，把「書」換成「片」。記錄看過、在看、想看的作品，集數會自己追，評分會自己更新，AI 還會幫你挑下一部。</p>
+          <div class="cta">
+            <a class="btn" href="https://cineai-1044062718546.us-west1.run.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <ul class="feats">
+            <li><strong>逐集逐季追蹤</strong>，觀看紀錄自動換算進度與狀態</li>
+            <li><strong>Gemini AI</strong>：智慧選片、相似作品、觀後心得與劇情摘要</li>
+            <li>IMDB ＋ 🍅 爛番茄評分，<strong>一鍵掃描</strong>整個片庫的新集數</li>
+            <li>觀影熱力圖、年度目標、放送行事曆；PWA 離線也能看</li>
+          </ul>
+          <div class="chips"><span>React 18</span><span>TypeScript</span><span>Vite</span><span>Supabase</span><span>Gemini</span><span>TMDB</span><span>Cloud Run</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- News Feed -->
+      <article class="app rv" id="newsfeed" style="--c:#2563eb">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>news-feed-horsecheng.web.app</span></div>
+          <img src="assets/shots/newsfeed.webp" width="1912" height="902" alt="News Feed 的 AI 智慧分類：依主題分群的月度新聞，右側是 AI 新聞彙總" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>03</b><span class="tag">AI 新聞聚合</span></div>
+          <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></svg></span>News Feed</h3>
+          <p class="sub">Feedly 風格的 AI 新聞閱讀器</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Claude Code</b></span><span class="vm">350 commits · 346 與 Claude 共同撰寫</span></div>
+          <p class="desc">爬蟲定時抓新聞，AI 幫每篇寫重點、幫相似新聞分群，再彙整成一份當日快報。</p>
+          <div class="cta">
+            <a class="btn" href="https://news-feed-horsecheng.web.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <ul class="feats">
+            <li><strong>Plugin 式爬蟲</strong>，Cloud Scheduler 平日每 15 分鐘自動更新</li>
+            <li>AI 摘要（三重點＋標籤）、<strong>AI 智慧分群</strong>、日／週／月新聞彙總</li>
+            <li>螢光筆與筆記、匯出 Markdown、TTS 朗讀、Web Push 推播</li>
+            <li>內建 NPB／NBA／MLB 戰績賽程與<strong>統一發票對獎</strong></li>
+          </ul>
+          <div class="chips"><span>FastAPI</span><span>React</span><span>Zustand</span><span>React Query</span><span>Gemini</span><span>Cloud Run Job</span><span>Cloud SQL</span><span>Firebase</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stock -->
+      <article class="app rv" id="stock" style="--c:#4f6bff">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>stock-horsecheng.web.app</span></div>
+          <img src="assets/shots/stock.webp" width="1911" height="898" alt="Portfolio Tracker 歷史頁（分享模式隱藏金額）：每季總成本與總價值的成長長條圖" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>04</b><span class="tag">投資組合</span></div>
+          <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span>Portfolio Tracker</h3>
+          <p class="sub">股票資產管理 · 台股／美股／日股</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Claude Code</b></span><span class="vm">全端：FastAPI ＋ React</span></div>
+          <p class="desc">記下每一筆買賣，自動算出損益、報酬率和年化報酬，並且支援多種幣別。</p>
+          <div class="cta">
+            <a class="btn" href="https://stock-horsecheng.web.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <ul class="feats">
+            <li>未實現／已實現損益、<strong>XIRR 年化報酬</strong>（移動平均成本法）</li>
+            <li>USD／JPY 自動換算台幣，yfinance <strong>即時報價</strong></li>
+            <li>依歷史配息推估<strong>下次除息日</strong>與預估可領金額</li>
+            <li>每季<strong>歷史成長圖</strong>，報酬率直接<strong>對標大盤</strong>（0050／S&amp;P500）</li>
+            <li>股息、借券、定存一起算；<strong>分享模式</strong>一鍵隱藏金額</li>
+          </ul>
+          <div class="chips"><span>FastAPI</span><span>SQLAlchemy</span><span>yfinance</span><span>React</span><span>Firebase Auth</span><span>Cloud Run</span><span>Cloud SQL</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Japanese -->
+      <article class="app rv" id="japanese" style="--c:#0e9fb0">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>japanese-learning-horsecheng.web.app</span></div>
+          <img src="assets/shots/japanese.webp" width="1536" height="730" alt="日語學習平台單字頁：附振り仮名的單字卡，含詞性、主題與學習狀態" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>05</b><span class="tag">語言學習</span></div>
+          <h3><span class="ico" style="font-weight:900;font-size:19px">あ</span>日語學習平台</h3>
+          <p class="sub">JLPT N5 → N4 → N3 循序學習</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Claude Code</b></span><span class="vm">全端：FastAPI ＋ React ＋ PWA</span></div>
+          <p class="desc">所有含漢字的內容都標上振り仮名，導覽列可以一鍵切換等級，從單字、文法一路練到模擬考。</p>
+          <div class="cta">
+            <a class="btn" href="https://japanese-learning-horsecheng.web.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <div class="nums">
+            <div><b>2,653</b>單字</div>
+            <div><b>341</b>文法點</div>
+            <div><b>102</b>篇短文</div>
+            <div><b>23</b>成就徽章</div>
+          </div>
+          <ul class="feats">
+            <li>動詞／形容詞<strong>活用表</strong>自動判別類別，連例外也有標出</li>
+            <li>多種測驗＋<strong>JLPT 模擬考</strong>，用 180 分制估分</li>
+            <li>短文點單字就能查解釋；四款遊戲：配對、聽力速答、<strong>Boss 對戰</strong>、翻譯拼圖</li>
+          </ul>
+          <div class="chips"><span>FastAPI</span><span>SQLAlchemy</span><span>React</span><span>TypeScript</span><span>Tailwind</span><span>PWA</span><span>Cloud SQL</span><span>Firebase</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PTCG -->
+      <article class="app rv" id="ptcg" style="--c:#d49a00">
+        <div class="shot"><div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>ptcg-gacha-horsecheng.web.app</span></div>
+          <img src="assets/shots/ptcg.webp" width="1897" height="890" alt="寶可夢卡牌抽獎所的混合獎池：日版幸運、皮卡丘、回饋祭獎池，附回饋率與剩餘庫存" loading="lazy">
+        </div></div>
+        <div class="body">
+          <div class="bl">
+          <div class="idx"><b>06</b><span class="tag">抽卡模擬</span></div>
+          <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h6M15 12h6"/><circle cx="12" cy="12" r="3"/></svg></span>寶可夢卡牌抽獎所</h3>
+          <p class="sub">Pokémon Card Gacha Simulator</p>
+          <div class="vibe"><span class="spark">✦</span><span>Vibe coded with <b>Claude Code</b></span><span class="vm">11 天 · 129 commits，全部與 Claude 共同撰寫</span></div>
+          <p class="desc"><strong>完整收錄歷代寶可夢實體卡牌擴充包</strong>：從 1996 年的初代到最新的 MEGA 系列，台灣中文版和日版都有，卡牌資料來自官方資料庫。開包不用花錢，演出盡量做到跟真的一樣。</p>
+          <div class="cta">
+            <a class="btn" href="https://ptcg-gacha-horsecheng.web.app/" target="_blank" rel="noopener">開啟網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </div>
+          </div>
+          <div class="br">
+          <div class="nums">
+            <div><b>36,648</b>張官方卡牌</div>
+            <div><b>199</b>個實體擴充包</div>
+            <div><b>58</b>個混合獎池</div>
+          </div>
+          <ul class="feats">
+            <li>單包、十連、<strong>開一盒</strong>：保底、神包、盒配與爆配</li>
+            <li>拖曳撕開卡包、3D 卡堆、<strong>7 級稀有度特效</strong>，音效由 WebAudio 即時合成</li>
+            <li>混合獎池（オリパ）、RUSH 連續挑戰、卡冊分解、成就、排行榜</li>
+          </ul>
+          <div class="chips"><span>Node.js</span><span>Express 5</span><span>node:sqlite</span><span>Postgres</span><span>Vanilla JS</span><span>Cloud Run</span><span>Firebase</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="block auto-sec" id="auto">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <span class="eyebrow">02 — Built &amp; updated by Dot</span>
+        <h2>ChatGPT「Dot」自動化資訊站</h2>
+      </div>
+      <p>由 ChatGPT 的 <strong>Dot</strong> 製作，<strong>每天早上 8 點定時更新</strong>最新資訊：它會自己蒐集來源、查核內容，再整理成網頁。</p>
+    </div>
+
+    <div class="grid3">
+      <a class="card rv" href="https://llm-daily-tw.horsecheng.chatgpt.site/" target="_blank" rel="noopener" style="--c:#2563eb">
+        <div class="thumb"><img src="assets/shots/llmdaily.webp" width="1440" height="900" alt="AI 日報首頁：本期速讀與 LLM 新聞卡片" loading="lazy"></div>
+        <div class="cb">
+          <span class="badge"><i></i>Dot · 每日 08:00 更新</span>
+          <h3>AI 日報｜LLM 資訊站</h3>
+          <p>每天彙整大型語言模型的最新動態，每則都附原始來源與重點分析。</p>
+          <ul>
+            <li>新模型・產業動態・論文精讀・工具部署</li>
+            <li>本期速讀與模型時間軸</li>
+            <li>每則附原始來源連結與查核日期</li>
+          </ul>
+          <span class="go">前往網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+
+      <a class="card rv" href="https://pokemon-go-event-fieldnotes.horsecheng.chatgpt.site/" target="_blank" rel="noopener" style="--c:#e0442f">
+        <div class="thumb"><img src="assets/shots/pogo.webp" width="1440" height="900" alt="Pokémon GO 活動筆記：當月活動日曆與重點" loading="lazy"></div>
+        <div class="cb">
+          <span class="badge"><i></i>Dot · 每日 08:00 更新</span>
+          <h3>Pokémon GO 活動筆記</h3>
+          <p>整理這個月的活動、登場寶可夢、加碼獎勵，以及免費和付費內容。</p>
+          <ul>
+            <li>活動日曆與時間線，可依類型篩選</li>
+            <li>提醒容易漏掉的領獎截止時間</li>
+            <li>附官方活動圖與準備建議</li>
+          </ul>
+          <span class="go">前往網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+
+      <a class="card rv" href="https://pokemon-sleep-fieldnotes.horsecheng.chatgpt.site/" target="_blank" rel="noopener" style="--c:#7c5cff">
+        <div class="thumb"><img src="assets/shots/pksleep.webp" width="1440" height="900" alt="Pokémon Sleep 睡眠研究筆記：活動月曆" loading="lazy"></div>
+        <div class="cb">
+          <span class="badge"><i></i>Dot · 每日 08:00 更新</span>
+          <h3>Pokémon Sleep 睡眠研究筆記</h3>
+          <p>把 Pokémon Sleep 的官方活動和研究重點整理在同一個地方。</p>
+          <ul>
+            <li>以月曆顯示活動、更新、截止時點</li>
+            <li>可篩選活動、新內容、選購禮包</li>
+            <li>附官方活動圖與準備建議</li>
+          </ul>
+          <span class="go">前往網站<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> HorseCheng · Crafted in conversation, shipped with Claude Code.</span>
+    <a href="#top" style="text-decoration:none">回到頂端 ↑</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, key='hc-theme';
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem(key,next);}catch(e){}
+  });
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  var top=document.getElementById('top');
+  addEventListener('scroll',function(){top.classList.toggle('scrolled',scrollY>8)},{passive:true});
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
